@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: cyberdesk-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+  redis:
+    image: redis:7-alpine
+    container_name: cyberdesk-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+  backend:
+    build:
+      context: ./apps/backend
+    container_name: cyberdesk-backend
+    restart: unless-stopped
+    env_file:
+      - ./apps/backend/.env.example
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - redis
+  admin-web:
+    build:
+      context: ./apps/admin-web
+    container_name: cyberdesk-admin-web
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+  client-web:
+    build:
+      context: ./apps/client-web
+    container_name: cyberdesk-client-web
+    restart: unless-stopped
+    ports:
+      - "5174:5174"
+volumes:
+  mongo_data:
+    driver: local
