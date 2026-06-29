@@ -252,7 +252,7 @@ Spins up MongoDB, Redis, and all three apps together.
 
 ## Author
 **Nafis Mansoori**
-SY BVoC, Thakur College of Engineering & Technology
+ Thakur College of Engineering & Technology
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
